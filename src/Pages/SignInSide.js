@@ -69,7 +69,7 @@ export default function SignInSide() {
   return (
     <ThemeProvider theme={createTheme()}>
       {!showDashboard && (
-        <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid container component="main" sx={{ height: "98vh" }}>
           <CssBaseline />
           <Grid
             item
@@ -78,7 +78,7 @@ export default function SignInSide() {
             md={7}
             sx={{
               backgroundImage:
-                "url(https://source.unsplash.com/random?wallpapers)",
+                "url(http://localhost:8000/staticfiles/admin/img/main.jpeg)",
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
                 t.palette.mode === "light"
@@ -104,6 +104,9 @@ export default function SignInSide() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                height: "100%", // Set height to 100%
+                justifyContent: "center", // Center content vertically
+                mt: 0,
               }}
             >
               <Typography component="h1" variant="h5">

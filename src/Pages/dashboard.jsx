@@ -443,7 +443,18 @@ function InnerDash({responseData}) {
   cobb1 = cobb1.toFixed(3);
   let age1 = responseData.age
   let weight1 = responseData.weight
-
+  let k="Moderate"
+  if (cobb1 >= 10 && cobb1 < 20) {
+    k = "Normal"
+  } else if (cobb1 >= 20 && cobb1 < 30) {
+    k = "Mild"
+  } else if (cobb1 >= 30 && cobb1 < 40) {
+    k = "Moderate"
+  } else if (cobb1 >= 40 && cobb1 < 50) {
+    k = "High"
+  } else if (cobb1 >= 50) {
+    k = "Hyper"
+  }
   const [cobb, setCobb] = useState(cobb1);
   const [severity, setSeverity] = useState("Moderate");
   const [Age, setAge] = useState(age1);
