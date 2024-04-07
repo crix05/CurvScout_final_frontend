@@ -398,25 +398,22 @@ function Sidebar({responseData}) {
           </SideContentHeader>
           <SideContentList>
             <DetailItem>
-              <DetailValue>{responseData.name}</DetailValue>
+              <DetailValue> Name : {responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.gender}</DetailValue>
+              <DetailValue>Gender : {responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.mobile_no}</DetailValue>
+              <DetailValue>Mob. : {responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.height}</DetailValue>
+              <DetailValue>Height : {responseData.height}ft.</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_group}</DetailValue>
+              <DetailValue>Blood Group : {responseData.blood_group} </DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.medical_history}</DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
+              <DetailValue>Blood Pressure : {responseData.blood_pressure_systolic} </DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper>
@@ -443,7 +440,18 @@ function InnerDash({responseData}) {
   cobb1 = cobb1.toFixed(3);
   let age1 = responseData.age
   let weight1 = responseData.weight
-
+  let k="Moderate"
+  if (cobb1 >= 10 && cobb1 < 20) {
+    k = "Normal"
+  } else if (cobb1 >= 20 && cobb1 < 30) {
+    k = "Mild"
+  } else if (cobb1 >= 30 && cobb1 < 40) {
+    k = "Moderate"
+  } else if (cobb1 >= 40 && cobb1 < 50) {
+    k = "High"
+  } else if (cobb1 >= 50) {
+    k = "Hyper"
+  }
   const [cobb, setCobb] = useState(cobb1);
   const [severity, setSeverity] = useState("Moderate");
   const [Age, setAge] = useState(age1);
@@ -469,7 +477,7 @@ function InnerDash({responseData}) {
             </CloseParent>
           </SideContentHeader>
           <SideContentList>
-            <DetailItem>
+          <DetailItem>
               <DetailValue>{responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
@@ -479,16 +487,13 @@ function InnerDash({responseData}) {
               <DetailValue>{responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.height}</DetailValue>
+              <DetailValue>{responseData.height}ft. (height)</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_group}</DetailValue>
+              <DetailValue>{responseData.blood_group} (Blood Group)</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.medical_history}</DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
+              <DetailValue>{responseData.blood_pressure_systolic} (Blood Pressure)</DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper2>
@@ -522,7 +527,7 @@ function InnerDash({responseData}) {
             <div className="xyz">
               <BarGraph2 cobbAng={cobb}/>
             </div>
-            <LineGraph />
+            <LineGraph responseData={responseData}   />
           </GraParent>
           </div>
         </InnerParent>
@@ -588,15 +593,15 @@ function BarGraph({ cobbAng }) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
-    if (cobbAng > 10 && cobbAng < 20) {
+    if (cobbAng >= 10 && cobbAng < 20) {
       setActive(0);
-    } else if (cobbAng > 20 && cobbAng < 30) {
+    } else if (cobbAng >= 20 && cobbAng < 30) {
       setActive(1);
-    } else if (cobbAng > 30 && cobbAng < 40) {
+    } else if (cobbAng >= 30 && cobbAng < 40) {
       setActive(2);
-    } else if (cobbAng > 40 && cobbAng < 50) {
+    } else if (cobbAng >= 40 && cobbAng < 50) {
       setActive(3);
-    } else if (cobbAng > 50) {
+    } else if (cobbAng >= 50) {
       setActive(4);
     }
   }, [cobbAng]); // Update active on cobbAng change
@@ -628,15 +633,15 @@ function BarGraph2({ cobbAng}) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
-    if (cobbAng > 10 && cobbAng < 20) {
+    if (cobbAng >= 10 && cobbAng < 20) {
       setActive(0);
-    } else if (cobbAng > 20 && cobbAng < 30) {
+    } else if (cobbAng >= 20 && cobbAng < 30) {
       setActive(1);
-    } else if (cobbAng > 30 && cobbAng < 40) {
+    } else if (cobbAng >= 30 && cobbAng < 40) {
       setActive(2);
-    } else if (cobbAng > 40 && cobbAng < 50) {
+    } else if (cobbAng >= 40 && cobbAng < 50) {
       setActive(3);
-    } else if (cobbAng > 50) {
+    } else if (cobbAng >= 50) {
       setActive(4);
     }
   }, [cobbAng]); // Update active on cobbAng change
@@ -664,10 +669,22 @@ function BarGraph2({ cobbAng}) {
   );
 }
 
-function LineGraph() {
+function LineGraph({ responseData }) {
+  // Assuming responseData.xray_image is a relative path fetched from the database
+  const baseUrl = 'http://127.0.0.1:8000/'; // Replace with your base URL
+  const imagePath = responseData.xray_image; // Assuming this is the path fetched from the database
+
+  // Concatenate the base URL with the image path
+  const imageUrl = baseUrl + imagePath;
+
   return (
-    <ResponsiveContainer width="50%" height="100%" className="wrapper2">
-      
+    <ResponsiveContainer
+      width="50%"
+      height="100%"
+      className="wrapper2"
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    >
+      {/* Your content here */}
     </ResponsiveContainer>
   );
 }
