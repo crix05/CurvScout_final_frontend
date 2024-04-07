@@ -27,7 +27,7 @@ const data = [
   {
     name: "Hypo",
     uv: 4000,
-    extent: 15,
+    extent: "10-20",
   },
   {
     name: "Mild",
@@ -660,7 +660,7 @@ function BarGraph2({ cobbAng}) {
           ))}
         </Bar>
       </BarChart>
-    </ResponsiveContainer>
+    </ResponsiveContainer> 
   );
 }
 
