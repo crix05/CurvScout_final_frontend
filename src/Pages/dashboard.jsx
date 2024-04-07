@@ -369,18 +369,18 @@ const CloseParent = styled.div`
 }
 `
 
-export default function Dashboard() {
+export function Dashboard({ responseData }) {
   return (
     <>
       <Parent className="Parent">
-        <Sidebar />
-        <InnerDash />
+        <Sidebar responseData={responseData} />
+        <InnerDash responseData={responseData} />
       </Parent>
     </>
   );
 }
 
-function Sidebar() {
+function Sidebar({responseData}) {
   return (
     <>
       <SidebarParent className="SidebarParent">
@@ -398,22 +398,25 @@ function Sidebar() {
           </SideContentHeader>
           <SideContentList>
             <DetailItem>
-              <DetailValue>John Doe</DetailValue>
+              <DetailValue>{responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>johndoe@example.com</DetailValue>
+              <DetailValue>{responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>+1234567890</DetailValue>
+              <DetailValue>{responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Some detail information</DetailValue>
+              <DetailValue>{responseData.height}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Another detail</DetailValue>
+              <DetailValue>{responseData.blood_group}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Last detail here</DetailValue>
+              <DetailValue>{responseData.medical_history}</DetailValue>
+            </DetailItem>
+            <DetailItem>
+              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper>
@@ -435,11 +438,16 @@ function Sidebar() {
   );
 }
 
-function InnerDash() {
-  const [cobb, setCobb] = useState(30.069);
+function InnerDash({responseData}) {
+  let cobb1 = responseData.Cobb_angle
+  cobb1 = cobb1.toFixed(3);
+  let age1 = responseData.age
+  let weight1 = responseData.weight
+
+  const [cobb, setCobb] = useState(cobb1);
   const [severity, setSeverity] = useState("Moderate");
-  const [Age, setAge] = useState(22);
-  const [Weight, setWeight] = useState(69.69);
+  const [Age, setAge] = useState(age1);
+  const [Weight, setWeight] = useState(weight1);
   const [clickCard, setClickCard] = useState('none')
 
   function handleClick(){
@@ -462,22 +470,25 @@ function InnerDash() {
           </SideContentHeader>
           <SideContentList>
             <DetailItem>
-              <DetailValue>John Doe</DetailValue>
+              <DetailValue>{responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>johndoe@example.com</DetailValue>
+              <DetailValue>{responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>+1234567890</DetailValue>
+              <DetailValue>{responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Some detail information</DetailValue>
+              <DetailValue>{responseData.height}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Another detail</DetailValue>
+              <DetailValue>{responseData.blood_group}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Last detail here</DetailValue>
+              <DetailValue>{responseData.medical_history}</DetailValue>
+            </DetailItem>
+            <DetailItem>
+              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper2>
@@ -509,7 +520,7 @@ function InnerDash() {
               <BarGraph />
             </div>
             <div className="xyz">
-              <BarGraph2 />
+              <BarGraph2/>
             </div>
             <LineGraph />
           </GraParent>
@@ -573,7 +584,7 @@ function Card({ icon, parameter }) {
 
 
 
-function BarGraph({ cobbAng = 25 }) {
+function BarGraph({ cobbAng }) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
@@ -613,7 +624,7 @@ function BarGraph({ cobbAng = 25 }) {
   );
 }
 
-function BarGraph2({ cobbAng = 25 }) {
+function BarGraph2({ cobbAng}) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
