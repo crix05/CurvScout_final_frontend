@@ -522,7 +522,7 @@ function InnerDash({responseData}) {
             <div className="xyz">
               <BarGraph2 cobbAng={cobb}/>
             </div>
-            <LineGraph />
+            <LineGraph responseData={responseData}   />
           </GraParent>
           </div>
         </InnerParent>
@@ -588,15 +588,15 @@ function BarGraph({ cobbAng }) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
-    if (cobbAng > 10 && cobbAng < 20) {
+    if (cobbAng >= 10 && cobbAng < 20) {
       setActive(0);
-    } else if (cobbAng > 20 && cobbAng < 30) {
+    } else if (cobbAng >= 20 && cobbAng < 30) {
       setActive(1);
-    } else if (cobbAng > 30 && cobbAng < 40) {
+    } else if (cobbAng >= 30 && cobbAng < 40) {
       setActive(2);
-    } else if (cobbAng > 40 && cobbAng < 50) {
+    } else if (cobbAng >= 40 && cobbAng < 50) {
       setActive(3);
-    } else if (cobbAng > 50) {
+    } else if (cobbAng >= 50) {
       setActive(4);
     }
   }, [cobbAng]); // Update active on cobbAng change
@@ -628,15 +628,15 @@ function BarGraph2({ cobbAng}) {
   const [active, setActive] = useState(3); // Initial state for active
 
   useEffect(() => {
-    if (cobbAng > 10 && cobbAng < 20) {
+    if (cobbAng >= 10 && cobbAng < 20) {
       setActive(0);
-    } else if (cobbAng > 20 && cobbAng < 30) {
+    } else if (cobbAng >= 20 && cobbAng < 30) {
       setActive(1);
-    } else if (cobbAng > 30 && cobbAng < 40) {
+    } else if (cobbAng >= 30 && cobbAng < 40) {
       setActive(2);
-    } else if (cobbAng > 40 && cobbAng < 50) {
+    } else if (cobbAng >= 40 && cobbAng < 50) {
       setActive(3);
-    } else if (cobbAng > 50) {
+    } else if (cobbAng >= 50) {
       setActive(4);
     }
   }, [cobbAng]); // Update active on cobbAng change
@@ -664,10 +664,22 @@ function BarGraph2({ cobbAng}) {
   );
 }
 
-function LineGraph() {
+function LineGraph({ responseData }) {
+  // Assuming responseData.xray_image is a relative path fetched from the database
+  const baseUrl = 'http://127.0.0.1:8000/'; // Replace with your base URL
+  const imagePath = responseData.xray_image; // Assuming this is the path fetched from the database
+
+  // Concatenate the base URL with the image path
+  const imageUrl = baseUrl + imagePath;
+
   return (
-    <ResponsiveContainer width="50%" height="100%" className="wrapper2">
-      
+    <ResponsiveContainer
+      width="50%"
+      height="100%"
+      className="wrapper2"
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    >
+      {/* Your content here */}
     </ResponsiveContainer>
   );
 }
