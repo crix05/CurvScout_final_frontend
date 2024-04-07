@@ -398,25 +398,22 @@ function Sidebar({responseData}) {
           </SideContentHeader>
           <SideContentList>
             <DetailItem>
-              <DetailValue>{responseData.name}</DetailValue>
+              <DetailValue> Name : {responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.gender}</DetailValue>
+              <DetailValue>Gender : {responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.mobile_no}</DetailValue>
+              <DetailValue>Mob. : {responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.height}</DetailValue>
+              <DetailValue>Height : {responseData.height}ft.</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_group}</DetailValue>
+              <DetailValue>Blood Group : {responseData.blood_group} </DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.medical_history}</DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
+              <DetailValue>Blood Pressure : {responseData.blood_pressure_systolic} </DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper>
@@ -480,7 +477,7 @@ function InnerDash({responseData}) {
             </CloseParent>
           </SideContentHeader>
           <SideContentList>
-            <DetailItem>
+          <DetailItem>
               <DetailValue>{responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
@@ -490,16 +487,13 @@ function InnerDash({responseData}) {
               <DetailValue>{responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.height}</DetailValue>
+              <DetailValue>{responseData.height}ft. (height)</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_group}</DetailValue>
+              <DetailValue>{responseData.blood_group} (Blood Group)</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.medical_history}</DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>{responseData.blood_pressure_systolic}</DetailValue>
+              <DetailValue>{responseData.blood_pressure_systolic} (Blood Pressure)</DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper2>
