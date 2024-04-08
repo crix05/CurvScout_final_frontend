@@ -369,7 +369,7 @@ const CloseParent = styled.div`
 }
 `
 
-export function Dashboard({ responseData }) {
+export default function Dashboard({ responseData }) {
   return (
     <>
       <Parent className="Parent">
