@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'poppins';
+  font-family: "Reem Kufi", sans-serif;
 }
 
 .manImg {
@@ -23,6 +23,7 @@
 body {
   max-width: 100%;
   overflow-x: hidden;
+  
 }
 
 body {
@@ -85,7 +86,6 @@ nav {
 .navbar-menu-container svg {
   font-size: 1.5rem;
   cursor: pointer;
-  color: white;
 }
 
 .home-banner-container {
@@ -122,14 +122,14 @@ nav {
 }
 
 .primary-heading {
-  font-size: 50px;
+  font-size: clamp(2rem, 5vw, 4rem);
   color: white;
   /* line-height: 5rem; */
   max-width: 700px;
 }
 
 .primary-text {
-  font-size: 20px;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   max-width: 700px;
   color: gray;
   margin: 1.5rem 0rem;
@@ -345,9 +345,6 @@ nav {
   }
 }
 @media (max-width: 800px) {
-  nav{
-    margin-top: 300px;
-  }
   .nav-logo-container {
     max-width: 140px;
   }
@@ -440,9 +437,6 @@ nav {
   }
 }
 @media (max-width: 600px) {
-  nav{
-    margin-top: 250px;
-  }
   .home-bannerImage-container,
   .about-background-image-container {
     display: none;

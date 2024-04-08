@@ -27,7 +27,7 @@ const data = [
   {
     name: "HypoLordosis",
     uv: 4000,
-    extent: 15,
+    extent: "10-20",
   },
   {
     name: "Mild HypoLordosis",
@@ -369,7 +369,7 @@ const CloseParent = styled.div`
 }
 `
 
-export function Dashboard({ responseData }) {
+export default function Dashboard({ responseData }) {
   return (
     <>
       <Parent className="Parent">
@@ -665,7 +665,7 @@ function BarGraph2({ cobbAng}) {
           ))}
         </Bar>
       </BarChart>
-    </ResponsiveContainer>
+    </ResponsiveContainer> 
   );
 }
 

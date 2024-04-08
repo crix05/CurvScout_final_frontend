@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Dashboard } from "./dashboard";
+import Dashboard from "./dashboard.jsx";
 import { useState, useEffect } from "react";
 
 function Copyright(props) {
