@@ -25,27 +25,27 @@ import {
 
 const data = [
   {
-    name: "Hypo",
+    name: "HypoLordosis",
     uv: 4000,
     extent: 15,
   },
   {
-    name: "Mild",
+    name: "Mild HypoLordosis",
     uv: 3000,
     extent: 35,
   },
   {
-    name: "Moderate",
+    name: "Mild",
     uv: 3000,
     extent: 25,
   },
   {
-    name: "High",
+    name: "Moderate",
     uv: 2000,
     extent: 15,
   },
   {
-    name: "Hyper",
+    name: "High",
     uv: 2780,
     extent: 10,
   },
@@ -440,17 +440,17 @@ function InnerDash({responseData}) {
   cobb1 = cobb1.toFixed(3);
   let age1 = responseData.age
   let weight1 = responseData.weight
-  let k="Moderate"
-  if (cobb1 >= 10 && cobb1 < 20) {
-    k = "Normal"
-  } else if (cobb1 >= 20 && cobb1 < 30) {
-    k = "Mild"
+  let k="Normal"
+  if (cobb1 >= 0 && cobb1 < 10) {
+    k = "Hypolordosis"
+  } else if (cobb1 >= 10 && cobb1 < 20) {
+    k = "Mild Hypo"
   } else if (cobb1 >= 30 && cobb1 < 40) {
-    k = "Moderate"
+    k = "Mild"
   } else if (cobb1 >= 40 && cobb1 < 50) {
-    k = "High"
+    k = "Moderate"
   } else if (cobb1 >= 50) {
-    k = "Hyper"
+    k = "Hyperlordosis"
   }
   const [cobb, setCobb] = useState(cobb1);
   const [severity, setSeverity] = useState("Moderate");
@@ -477,23 +477,23 @@ function InnerDash({responseData}) {
             </CloseParent>
           </SideContentHeader>
           <SideContentList>
-          <DetailItem>
-              <DetailValue>{responseData.name}</DetailValue>
+            <DetailItem>
+              <DetailValue> Name : {responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.gender}</DetailValue>
+              <DetailValue>Gender : {responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.mobile_no}</DetailValue>
+              <DetailValue>Mob. : {responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.height}ft. (height)</DetailValue>
+              <DetailValue>Height : {responseData.height}ft.</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_group} (Blood Group)</DetailValue>
+              <DetailValue>Blood Group : {responseData.blood_group} </DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>{responseData.blood_pressure_systolic} (Blood Pressure)</DetailValue>
+              <DetailValue>Blood Pressure : {responseData.blood_pressure_systolic} </DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper2>
