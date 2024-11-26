@@ -8,6 +8,8 @@ import ScaleIcon from '@mui/icons-material/Scale';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
+import HeightIcon from '@mui/icons-material/Height';
+import { useNavigate } from 'react-router-dom';
 import {
   BarChart,
   LineChart,
@@ -25,30 +27,30 @@ import {
 
 const data = [
   {
-    name: "HypoLordosis",
+    name: "Hypo",
     uv: 4000,
-    extent: "10-20",
+    extent: 10,
   },
   {
-    name: "Mild HypoLordosis",
+    name: "Mild Hypo",
     uv: 3000,
-    extent: 35,
+    extent: 15,
   },
   {
     name: "Mild",
     uv: 3000,
-    extent: 25,
+    extent: 35,
   },
   {
     name: "Moderate",
     uv: 2000,
-    extent: 15,
+    extent: 25,
   },
   {
-    name: "High",
+    name: "Hyper",
     uv: 2780,
-    extent: 10,
-  },
+    extent: 10,
+  },
 ];
 
 // const data = [
@@ -117,6 +119,7 @@ const ContentParent = styled.div`
     padding: 10px;
     padding-top: 30px;
   }
+    
 `;
 
 const SidebarParent = styled.div`
@@ -381,6 +384,10 @@ export default function Dashboard({ responseData }) {
 }
 
 function Sidebar({responseData}) {
+  const navigate = useNavigate();
+  function handleClick(){
+    navigate('/')
+  }
   return (
     <>
       <SidebarParent className="SidebarParent">
@@ -394,7 +401,7 @@ function Sidebar({responseData}) {
         </ProjName>
         <SideContentWrapper>
           <SideContentHeader>
-            <SideContentTitle>User Profile</SideContentTitle>
+            <SideContentTitle>Patient Profile</SideContentTitle>
           </SideContentHeader>
           <SideContentList>
             <DetailItem>
@@ -404,17 +411,12 @@ function Sidebar({responseData}) {
               <DetailValue>Gender : {responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Mob. : {responseData.mobile_no}</DetailValue>
+              <DetailValue>Mob : {responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Height : {responseData.height}ft.</DetailValue>
+              <DetailValue>Age : {responseData.age}</DetailValue>
             </DetailItem>
-            <DetailItem>
-              <DetailValue>Blood Group : {responseData.blood_group} </DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>Blood Pressure : {responseData.blood_pressure_systolic} </DetailValue>
-            </DetailItem>
+            
           </SideContentList>
         </SideContentWrapper>
         </div>
@@ -422,7 +424,7 @@ function Sidebar({responseData}) {
           <div style={{color: 'white'}}>
           <ArrowBackIosIcon/>
           </div>
-          <div style={{color: 'white', paddingBottom: 8}}>
+          <div style={{color: 'white', paddingBottom: 8,cursor: 'pointer'}} onClick={handleClick}>
             Home
           </div>
         </ReturnHome>
@@ -441,19 +443,20 @@ function InnerDash({responseData}) {
   let age1 = responseData.age
   let weight1 = responseData.weight
   let k="Normal"
-  if (cobb1 >= 0 && cobb1 < 10) {
+  if (cobb1 >= 0 && cobb1 < 20) {
     k = "Hypolordosis"
-  } else if (cobb1 >= 10 && cobb1 < 20) {
-    k = "Mild Hypo"
-  } else if (cobb1 >= 30 && cobb1 < 40) {
-    k = "Mild"
-  } else if (cobb1 >= 40 && cobb1 < 50) {
-    k = "Moderate"
-  } else if (cobb1 >= 50) {
+  } else if (cobb1 >= 20 && cobb1 < 40) {
+    k = "Normal"
+  } else if (cobb1 >=40) {
     k = "Hyperlordosis"
-  }
+  } 
   const [cobb, setCobb] = useState(cobb1);
-  const [severity, setSeverity] = useState("Moderate");
+  const [severity, setSeverity] = useState("Normal");
+  useEffect(()=>{
+    if (cobb1 >= 0 && cobb1 < 20) setSeverity("Hypolordosis")
+    if (cobb1 >= 40) setSeverity("Hyperlordosis")
+  },[])
+  
   const [Age, setAge] = useState(age1);
   const [Weight, setWeight] = useState(weight1);
   const [clickCard, setClickCard] = useState('none')
@@ -471,29 +474,23 @@ function InnerDash({responseData}) {
       <FloatingCard style={{display: clickCard}}>
       <SideContentWrapper2>
           <SideContentHeader>
-            <SideContentTitle>User Profile</SideContentTitle>
+            <SideContentTitle>Patient Profile</SideContentTitle>
             <CloseParent>
             <CloseIcon onClick={handleCross}/>
             </CloseParent>
           </SideContentHeader>
           <SideContentList>
-            <DetailItem>
+          <DetailItem>
               <DetailValue> Name : {responseData.name}</DetailValue>
             </DetailItem>
             <DetailItem>
               <DetailValue>Gender : {responseData.gender}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Mob. : {responseData.mobile_no}</DetailValue>
+              <DetailValue>Mob : {responseData.mobile_no}</DetailValue>
             </DetailItem>
             <DetailItem>
-              <DetailValue>Height : {responseData.height}ft.</DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>Blood Group : {responseData.blood_group} </DetailValue>
-            </DetailItem>
-            <DetailItem>
-              <DetailValue>Blood Pressure : {responseData.blood_pressure_systolic} </DetailValue>
+              <DetailValue>Age : {responseData.age}</DetailValue>
             </DetailItem>
           </SideContentList>
         </SideContentWrapper2>
@@ -517,16 +514,16 @@ function InnerDash({responseData}) {
           <CardParent className="CardParent">
             <Card icon={1} parameter={cobb} />
             <Card icon={2} parameter={severity} />
-            <Card icon={3} parameter={Age} />
+            <Card icon={3} parameter={responseData.height} />
             <Card icon={4} parameter={Weight} />
           </CardParent>
           <GraParent className="GraParent">
             <div className="abc">
-              <BarGraph cobbAng={cobb}/>
+              <BarGraph cobb={cobb}/>
             </div>
-            <div className="xyz">
+            {/* <div className="xyz">
               <BarGraph2 cobbAng={cobb}/>
-            </div>
+            </div> */}
             <LineGraph responseData={responseData}   />
           </GraParent>
           </div>
@@ -544,7 +541,7 @@ function Card({ icon, parameter }) {
       case 2:
         return [<BarChartIcon />, "Severity",""];
       case 3:
-        return [<CalendarMonthIcon/>, "Age", "years"];
+        return [<HeightIcon/>, "Height", "cm"];
       case 4:
         return [<ScaleIcon/>, "Weight", "kg"];
     }
@@ -589,93 +586,171 @@ function Card({ icon, parameter }) {
 
 
 
-function BarGraph({ cobbAng }) {
-  const [active, setActive] = useState(3); // Initial state for active
-
-  useEffect(() => {
-    if (cobbAng >= 10 && cobbAng < 20) {
-      setActive(0);
-    } else if (cobbAng >= 20 && cobbAng < 30) {
-      setActive(1);
-    } else if (cobbAng >= 30 && cobbAng < 40) {
-      setActive(2);
-    } else if (cobbAng >= 40 && cobbAng < 50) {
-      setActive(3);
-    } else if (cobbAng >= 50) {
-      setActive(4);
-    }
-  }, [cobbAng]); // Update active on cobbAng change
-
+function BarGraph({ cobb }) {
+  console.log("cobb", cobb);
   return (
-    <ResponsiveContainer className="wrapper" style={{display: 'flex', alignItems: 'flexStart', justifyContent: 'flexStart'}}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <style>{/* Your custom CSS styles can go here */}</style>
-        <Bar dataKey="extent" barSize={60}>
-          {data.map((entry, index) => (
-            <Cell
-              cursor="pointer"
-              fill={index === active ? "#82ca9d" : "#8884d8"}
-              key={`cell-${index}`}
-            />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+    { cobb<20 && (
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          color: '#333',
+          padding: '20px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          maxWidth: '650px',
+          margin: 'auto',
+          height: '400px',
+          overflow: 'hidden'
+        }}
+      >
+        <div style={{ marginBottom: '20px', fontSize: '16px' }}>
+          <strong>Hypolordosis</strong> refers to a reduced inward curvature of the lower spine (lumbar region), which can lead to a flatter back and improper posture. It may result from poor posture, muscle imbalances, or degenerative conditions.
+        </div>
+    
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Posture correction:</strong> Maintain a neutral spine while sitting, standing, and sleeping.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Strengthening exercises:</strong> Focus on core and lower back muscles to improve stability.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Stretching:</strong> Regularly stretch hip flexors, hamstrings, and lower back to alleviate tightness.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Ergonomic adjustments:</strong> Ensure a supportive chair and desk setup for better spinal alignment.
+        </div>
+      </div>
+    )}
+
+    { (cobb>=20 && cobb<40) && (
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          color: '#333',
+          padding: '20px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          maxWidth: '650px',
+          margin: 'auto',
+          height: '400px',
+          overflow: 'hidden'
+        }}
+      >
+        <div style={{ marginBottom: '20px', fontSize: '16px' }}>
+          <strong>Normal Back (Neutral Lumbar Curve)</strong> features a natural inward curve in the lumbar region, contributing to proper posture and alignment of the spine. This curvature allows for effective weight distribution and shock absorption during movement.
+        </div>
+
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Posture awareness:</strong> Ensure your spine remains aligned while sitting, standing, and sleeping.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Core strengthening:</strong> Regular exercises targeting the core muscles support spinal stability.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Stretching:</strong> Stretching the back and surrounding muscles helps maintain flexibility and prevent tightness.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Ergonomic adjustments:</strong> Ensure your workstation promotes a neutral spine position to reduce strain.
+        </div>
+      </div>
+    )}
+
+    { cobb>=40 && (
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          color: '#333',
+          padding: '20px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          maxWidth: '650px',
+          margin: 'auto',
+          height: '400px',
+          overflow: 'hidden'
+        }}
+      >
+        <div style={{ marginBottom: '20px', fontSize: '16px' }}>
+          <strong>Hyperlordosis</strong> refers to an excessive inward curvature of the lower spine (lumbar region), which can cause an exaggerated arch in the lower back. This condition may result from poor posture, muscle imbalances, or certain spinal abnormalities. Symptoms can include lower back pain, discomfort while standing, and limited mobility.
+        </div>
+
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Posture correction:</strong> Avoid excessive arching of the lower back and practice maintaining a neutral spine.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Strengthening exercises:</strong> Focus on strengthening the core, glutes, and hamstrings to reduce strain on the lumbar spine.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Stretching:</strong> Regularly stretch the hip flexors, quads, and lower back to relieve tightness.
+        </div>
+        <div style={{ marginBottom: '12px', fontSize: '14px', lineHeight: '1.6' }}>
+          <strong>Ergonomic adjustments:</strong> Ensure proper support while sitting or standing to maintain a balanced spinal alignment.
+        </div>
+      </div>
+    )}
+
+    </div>
+    
+    
   );
 }
 
-function BarGraph2({ cobbAng}) {
-  const [active, setActive] = useState(3); // Initial state for active
 
-  useEffect(() => {
-    if (cobbAng >= 10 && cobbAng < 20) {
-      setActive(0);
-    } else if (cobbAng >= 20 && cobbAng < 30) {
-      setActive(1);
-    } else if (cobbAng >= 30 && cobbAng < 40) {
-      setActive(2);
-    } else if (cobbAng >= 40 && cobbAng < 50) {
-      setActive(3);
-    } else if (cobbAng >= 50) {
-      setActive(4);
-    }
-  }, [cobbAng]); // Update active on cobbAng change
+// function BarGraph2({ cobbAng}) {
+//   const [active, setActive] = useState(3); // Initial state for active
 
-  return (
-    <ResponsiveContainer width="100%" height="100%" className="wrapper">
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <style></style>
-        <Bar dataKey="extent" barSize={20}>
-          {data.map((entry, index) => (
-            <Cell
-              cursor="pointer"
-              fill={index === active ? "#82ca9d" : "#8884d8"}
-              key={`cell-${index}`}
-            />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer> 
-  );
-}
+//   useEffect(() => {
+//     if (cobbAng >= 0 && cobbAng < 10) {
+//       setActive(0);
+//     } else if (cobbAng >= 10 && cobbAng < 20) {
+//       setActive(1);
+//     } else if (cobbAng >= 20 && cobbAng < 40) {
+//       setActive(3);
+//     } else if (cobbAng >= 40 && cobbAng < 50) {
+//       setActive(4);
+//     } else if (cobbAng >= 50) {
+//       setActive(4);
+//     }
+//   }, [cobbAng]); // Update active on cobbAng change
+
+//   return (
+//     <ResponsiveContainer width="100%" height="100%" className="wrapper">
+//       <BarChart data={data}>
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis />
+//         <Tooltip />
+//         <Legend />
+//         <style></style>
+//         <Bar dataKey="extent" barSize={20}>
+//           {data.map((data, index) => (
+//             <Cell
+//               cursor="pointer"
+//               fill={index === active ? "#82ca9d" : "#8884d8"}
+//               key={`cell-${index}`}
+//             />
+//           ))}
+//         </Bar>
+//       </BarChart>
+//     </ResponsiveContainer> 
+// );
+// }
 
 function LineGraph({ responseData }) {
   // Assuming responseData.xray_image is a relative path fetched from the database
-  const baseUrl = 'http://127.0.0.1:8000/'; // Replace with your base URL
-  const imagePath = responseData.xray_image; // Assuming this is the path fetched from the database
+  const baseUrl = 'http://127.0.0.1:8000'; // Replace with your base URL
+  const imagePath = '/staticfiles/admin/img/final_image.png'; // Assuming this is the path fetched from the database
 
   // Concatenate the base URL with the image path
   const imageUrl = baseUrl + imagePath;
+  const imageUrl2 = baseUrl + responseData.xray_image;
+
+  console.log(responseData)
+  console.log("Hello",imageUrl)
+  console.log("Hello2", imageUrl2)
 
   return (
     <ResponsiveContainer
